@@ -30,7 +30,10 @@
 
        canvas {
            border: 0.5px solid #ffffff;
-           
+            width: 90vw;      /* passt sich Bildschirmbreite an */
+            height: 90vw;     /* bleibt quadratisch */
+            max-width: 500px; /* größer als Original nie */
+            max-height: 500px;
        }
 
 .mobile-controls {
@@ -87,7 +90,8 @@ const ctx = canvas.getContext("2d");
 
 //Ein Feld= 25px(500/20)
 
-const boxSize = 25;
+const gridCount = 20;
+const boxSize = canvas.width / gridCount;
 const rows = canvas.height / boxSize;
 const cols = canvas.width / boxSize;
 
