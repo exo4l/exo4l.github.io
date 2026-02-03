@@ -13,7 +13,6 @@
 
     <p>Drücke W A S D zum Bewegen, SPACE = Boost</p>
 
-    <p1>Refresh Site to start again</p1>
    
    <style>
        body {
@@ -113,6 +112,15 @@ function bindButton(id, key){
     });
 }
 
+canvas.addEventListener("touchstart", () => {
+    if (gameOver) restartGame();
+});
+
+canvas.addEventListener("click", () => {
+    if (gameOver) restartGame();
+});
+
+
 bindButton("up", "w");
 bindButton("down", "s");
 bindButton("left", "a");
@@ -200,6 +208,7 @@ let directionChanged = false;
 //neue funktion die changediretion heißt und mit event verknüpft ist (event.key)
 function changeDirection(event) {
 
+if (gameOver) return;
 
 
     if (directionChanged) return;
@@ -257,6 +266,8 @@ function updateSpeed() {
 //damit es immer wieer neu läuft und neu zeichnet
 function gameLoop() {
 
+    if (gameOver) return;
+
   directionChanged= false;
 
 
@@ -300,8 +311,7 @@ function gameLoop() {
         // Wand-Kollision
 if (newHead.x < 0 || newHead.x >= cols || newHead.y < 0 || newHead.y >= rows) {
     gameOver = true;
-    dx = 0;
-    dy = 0;
+    clearInterval(gameInterval);
     break;
 }
 
@@ -309,8 +319,7 @@ if (newHead.x < 0 || newHead.x >= cols || newHead.y < 0 || newHead.y >= rows) {
 for (let segment of snake) {
     if (segment.x === newHead.x && segment.y === newHead.y) {
         gameOver = true;
-        dx = 0;
-        dy = 0;
+        clearInterval(gameInterval);
         break;
         
         
